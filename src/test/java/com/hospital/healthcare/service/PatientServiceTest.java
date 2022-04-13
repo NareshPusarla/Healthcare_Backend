@@ -13,12 +13,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.hospital.healthcare.model.Patients;
 import com.hospital.healthcare.repository.PatientRepository;
 
 //@RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
+@ComponentScan
 public class PatientServiceTest {
 
 	@Mock
