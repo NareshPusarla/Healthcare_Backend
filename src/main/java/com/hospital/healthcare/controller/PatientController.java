@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hospital.healthcare.model.Patients;
 import com.hospital.healthcare.service.PatientService;
 
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/patient")
 
 public class PatientController {
 
@@ -35,7 +37,7 @@ public class PatientController {
 	
 	//create patient 
 	@PostMapping("/addpatients")
-	public Patients createPatient(@Valid @RequestBody Patients newPatient) {
+	public Patients createPatient(@RequestBody Patients newPatient) {
 		return patientService.createPatient(newPatient);
 	}
 	
@@ -61,4 +63,5 @@ public class PatientController {
 		response.put("deleted", Boolean.TRUE);
 		return ResponseEntity.ok(response);
 	}
+	
 }
