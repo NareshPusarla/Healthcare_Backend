@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hospital.healthcare.exception.ResourceNotFoundException;
 import com.hospital.healthcare.model.Patients;
 import com.hospital.healthcare.service.PatientService;
 
@@ -43,19 +45,19 @@ public class PatientController {
 	
 	//get patients by id
 	@GetMapping("/patients/{id}")
-	public Patients getPatientsById(@PathVariable Long id){
+	public Patients getPatientsById(@PathVariable Long id) throws ResourceNotFoundException{
 		return patientService.getPatientsById(id);
 	}
 	
 	//update patients by id
 	@PutMapping("/updatepatients/{id}")
-	public ResponseEntity<Patients> updatePatient(@PathVariable Long id, @RequestBody Patients updatePatient){
+	public ResponseEntity<Patients> updatePatient(@PathVariable Long id, @RequestBody Patients updatePatient) throws ResourceNotFoundException{
 		return patientService.updatePatient(id, updatePatient);
 	}
 	
 	//delete patient
 	@DeleteMapping("/deletepatients/{id}")
-	public ResponseEntity<Map<String, Boolean>> deletePatient(@PathVariable Long id) {
+	public ResponseEntity<Map<String, Boolean>> deletePatient(@PathVariable Long id) throws ResourceNotFoundException {
 		Patients patient = patientService.getPatientsById(id);
 		
 		patientService.deletePatient(id);

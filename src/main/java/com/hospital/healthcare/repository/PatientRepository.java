@@ -7,5 +7,5 @@ import com.hospital.healthcare.model.Patients;
 
 @Repository
 public interface PatientRepository extends JpaRepository<Patients, Long> {
-	
+	Patients findByPatientId(Long id);
 }
