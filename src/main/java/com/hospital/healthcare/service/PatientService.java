@@ -29,12 +29,18 @@ public class PatientService {
 	}
 
 	// get patients by id
-	public Patients getPatientsById(Long id) {
-		return patientRepository.findById(id).orElse(null);
+	public Patients getPatientsById(Long id) throws ResourceNotFoundException {
+//		return patientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient not exist with id: " + id));
+		Patients patients = patientRepository.findByPatientId(id);
+		if(patients != null) {
+			return patients;
+		}else {
+			throw new ResourceNotFoundException("User not found with this id: "+id);
+		}
 	}
 
 	// update patients by id
-	public ResponseEntity<Patients> updatePatient(Long id, Patients updatePatient) {
+	public ResponseEntity<Patients> updatePatient(Long id, Patients updatePatient) throws ResourceNotFoundException {
 		Patients patient = patientRepository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Patient not exist with id: " + id));
 
@@ -48,14 +54,19 @@ public class PatientService {
 	}
 
 	// delete patient
-	public ResponseEntity<Map<String, Boolean>> deletePatient(Long id) {
-		Patients patient = patientRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Patient not exist with id: " + id));
+	public ResponseEntity<Map<String, Boolean>> deletePatient(Long id) throws ResourceNotFoundException {
+		Patients patient = patientRepository.findByPatientId(id);
+				
+		if(patient != null) {
+			patientRepository.delete(patient);
+			Map<String, Boolean> response = new HashMap<>();
+			response.put("deleted", Boolean.TRUE);
+			return ResponseEntity.ok(response);
+		}else {
+			throw new ResourceNotFoundException("User not found with this id: "+id);
+		}
+		
 
-		patientRepository.delete(patient);
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		return ResponseEntity.ok(response);
 	}
 	
 }
