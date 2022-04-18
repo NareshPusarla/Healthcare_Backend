@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,31 +21,31 @@ public class Patients {
 	private long patientId;
 	
 	@Column(name = "name")
-	@NotNull(message="name can't be null")
-	@Min(value = 3, message="name should atleast 3 letters")
+	@NotEmpty
+	@Size(min = 3, message="name should atleast 3 letters")
 	private String patientName;
 	
 	@Column(name = "address")
-	@NotNull(message="address can't be null")
-	@Min(value = 10, message="name should atleast 10 letters")
+	@NotEmpty
+	@Size(min = 10, message="name should atleast 10 letters")
 	private String patientAddress;
 	
 	@Column(name = "email")
-	@NotNull(message="email can't be null")
+	@NotEmpty
 	@Email
 	private String patientEmail;
 	
 	@Column(name = "mobileNumber")
-	@NotNull(message="mobile number can't be null")
-	@Min(value = 12, message="name should atleast 12 digits 10 + country code")
-	private long patientMobileNumber;
+	@NotEmpty
+	@Size(min = 10, message="name should atleast 10 digits")
+	private String patientMobileNumber;
 
 	public Patients() {
 		
 	}
 	
 	public Patients(long patientId, String patientName, String patientAddress, String patientEmail,
-			long patientMobileNumber) {
+			String patientMobileNumber) {
 		super();
 		this.patientId = patientId;
 		this.patientName = patientName;
@@ -77,10 +78,10 @@ public class Patients {
 	public void setPatientEmail(String patientEmail) {
 		this.patientEmail = patientEmail;
 	}
-	public long getPatientMobileNumber() {
+	public String getPatientMobileNumber() {
 		return patientMobileNumber;
 	}
-	public void setPatientMobileNumber(long patientMobileNumber) {
+	public void setPatientMobileNumber(String patientMobileNumber) {
 		this.patientMobileNumber = patientMobileNumber;
 	}
 
